@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Research App</title>
+<link rel="icon" href="icon.ico" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<svg class="sketch-defs" width="0" height="0" aria-hidden="true">
+  <filter id="sketchFilter" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="2" seed="7" result="noise" />
+    <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+  <filter id="sketchFilterSmall" x="-25%" y="-25%" width="150%" height="150%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.04 0.09" numOctaves="2" seed="3" result="noise2" />
+    <feDisplacementMap in="SourceGraphic" in2="noise2" scale="2.5" xChannelSelector="R" yChannelSelector="G" />
+  </filter>
+</svg>
+
+<div class="corner-cluster">
+  <div id="usageCounter" class="usage-counter" title="Gemini calls used today">–/–</div>
+  <button id="tutorialReplayBtn" class="usage-counter tutorial-replay-btn" title="Replay tutorial">🎓</button>
+</div>
+
+<div id="tutorialOverlay" class="tutorial-overlay">
+  <div id="tutorialSpotlight" class="tutorial-spotlight"></div>
+  <div id="tutorialTooltip" class="tutorial-tooltip">
+    <p id="tutorialTitle" class="tutorial-title"></p>
+    <p id="tutorialText" class="tutorial-text"></p>
+    <div class="tutorial-footer">
+      <span id="tutorialProgress" class="tutorial-progress"></span>
+      <div class="tutorial-actions">
+        <button id="tutorialSkip" class="ghost-btn small-btn">Skip tour</button>
+        <button id="tutorialBack" class="ghost-btn small-btn">Back</button>
+        <button id="tutorialNext" class="primary-btn">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="app-header">
+  <h1>Research App</h1>
+  <div class="header-actions">
+    <button id="settingsToggle" class="icon-btn" title="API key settings">⚙️</button>
+    <button id="themeToggle" class="icon-btn" title="Toggle light/dark theme">🌙</button>
+  </div>
+</header>
+
+<main>
+  <div class="toolbar">
+    <input type="text" id="searchInput" class="search-input" placeholder="Search topics and sources…" autocomplete="off" />
+    <select id="statusFilter" class="filter-select">
+      <option value="">All statuses</option>
+      <option value="unread">Unread</option>
+      <option value="reviewed">Reviewed</option>
+      <option value="important">Important</option>
+    </select>
+    <select id="tagFilter" class="filter-select">
+      <option value="">All tags</option>
+    </select>
+  </div>
+
+  <form id="addTopicForm" class="add-topic-form">
+    <div class="field-row">
+      <input type="text" id="topicNameInput" placeholder="New research topic…" maxlength="80" required autocomplete="off" />
+      <button type="button" class="mic-btn" data-mic-target="topicNameInput" title="Speak topic name">🎤</button>
+    </div>
+
+    <div class="field-row">
+      <textarea id="topicPurposeInput" placeholder="Purpose — why do you want this researched? (shapes the summary and what gets found)" maxlength="600" rows="2"></textarea>
+      <button type="button" class="mic-btn" data-mic-target="topicPurposeInput" title="Speak purpose">🎤</button>
+    </div>
+
+    <textarea id="topicSeedsInput" placeholder="Seed references (optional) — one paper/article URL or title per line. Leave blank to let it find everything on its own." maxlength="2000" rows="2"></textarea>
+
+    <div class="field-row">
+      <label class="depth-label" for="topicDepthInput">Research depth</label>
+      <select id="topicDepthInput"></select>
+      <button type="submit" class="primary-btn">+ Add Topic</button>
+    </div>
+  </form>
+
+  <div id="topicsContainer" class="topics-container"></div>
+  <p id="emptyState" class="empty-state">No research topics yet — add one above to get started.</p>
+</main>
+
+<div id="confirmOverlay" class="confirm-overlay">
+  <div class="confirm-box">
+    <p id="confirmMessage"></p>
+    <div class="confirm-actions">
+      <button id="confirmCancel" class="ghost-btn">Cancel</button>
+      <button id="confirmOk" class="danger-btn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<div id="settingsOverlay" class="confirm-overlay">
+  <div class="confirm-box settings-box">
+    <h3>Gemini API Key</h3>
+    <p id="settingsStatus" class="settings-status"></p>
+    <input type="password" id="settingsKeyInput" placeholder="Paste your Gemini API key…" autocomplete="off" />
+    <div class="tier-toggle">
+      <label><input type="radio" name="tier" value="free" checked /> Free tier (Flash)</label>
+      <label><input type="radio" name="tier" value="paid" /> Paid / billing enabled (Pro)</label>
+    </div>
+    <div class="confirm-actions">
+      <button id="settingsCancel" class="ghost-btn">Close</button>
+      <button id="settingsSave" class="primary-btn">Save Key</button>
+    </div>
+  </div>
+</div>
+
+<script src="storage.js"></script>
+<script src="script.js"></script>
+<script src="tutorial.js"></script>
+</body>
+</html>
